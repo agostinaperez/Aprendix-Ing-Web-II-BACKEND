@@ -1,0 +1,24 @@
+{
+  "name": "aprendix-ing-web-ii-backend",
+  "version": "1.0.0",
+  "description": "Trabajo Práctico integrador para la materia Ingeniería Web 2, 2025. Pérez López Agostina y Camila Doffo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agostinaperez/Aprendix-Ing-Web-II-BACKEND.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/agostinaperez/Aprendix-Ing-Web-II-BACKEND/issues"
+  },
+  "homepage": "https://github.com/agostinaperez/Aprendix-Ing-Web-II-BACKEND#readme",
+  "dependencies": {
+    "pg": "^8.15.6"
+  }
+}
