@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Trabajo Práctico integrador para la materia Ingeniería Web 2, 2025. Pérez López Agostina y Camila Doffo",
   "main": "app.js",
+  "type": "module",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -13,12 +16,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/agostinaperez/Aprendix-Ing-Web-II-BACKEND/issues"
   },
   "homepage": "https://github.com/agostinaperez/Aprendix-Ing-Web-II-BACKEND#readme",
   "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "cors": "2.8.5",
+    "express": "^4.21.2",
     "pg": "^8.15.6"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.0",
+    "prisma": "^6.8.2",
+    "standard": "^17.1.0"
   }
 }

@@ -1,39 +1,26 @@
-import "reflect-metadata"
-const express = require('express');
-const { AppDataSource } = require('./config/data-source');
+import express, { json } from 'express';
+import cors from 'cors';
+
+import alumnoRouter from './router/alumno.js';
+import inscripcionRouter from './router/inscripcion.js';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ?? 3000;
 
-app.use(express.json());
+app.use(json());
+app.use(cors());
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Conectado a la base de datos");
+// Rutas
+app.use('/alumnos', alumnoRouter);
+app.use('/inscripciones', inscripcionRouter);
 
-    // Tus rutas aquí
-    app.get('/', (req, res) => {
-      res.send('¡Servidor con TypeORM y PostgreSQL activo!');
-    });
-
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en http://localhost:${PORT}`);
-    });
-  })
-  .catch((error) => console.log("Error al conectar a la DB", error));
-
-  /*EJEMPLO DE USO
-  app.get('/alumnos', async (req, res) => {
-  const alumnoRepo = AppDataSource.getRepository('Alumno');
-  const alumnos = await alumnoRepo.find();
-  res.json(alumnos);
+app.get('/', (req, res) => {
+  res.send('¡Servidor con Prisma y PostgreSQL activo!');
 });
 
-app.post('/alumnos', async (req, res) => {
-  const alumnoRepo = AppDataSource.getRepository('Alumno');
-  const nuevo = alumnoRepo.create(req.body); // req.body debe tener nombre y correo
-  const guardado = await alumnoRepo.save(nuevo);
-  res.status(201).json(guardado);
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-PUEDO TENER MIS RUTAS EN OTRO LADO SEPARADO
-  */
+
+
+//npm run dev
