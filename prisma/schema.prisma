@@ -26,6 +26,7 @@ model Usuario {
 
   inscripciones Inscripcion[] @relation("inscripcionesAlumno")
   clases  Curso[] @relation("cursosDocente")
+  clasesVistas ClaseVista[]
 }
 
 model Curso {
@@ -33,9 +34,35 @@ model Curso {
   titulo      String
   profesor    Usuario @relation("cursosDocente", fields: [profesorId], references: [id])
   profesorId  Int
-//agregar descripcion e imagen
+  descripcion String
+  imagen        String
+  categoria     String
+
+  clases Clase[]  
   inscripciones Inscripcion[]
 }
+
+model Clase {
+  id          Int     @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  archivo  String 
+  vista       Boolean  @default(false)
+  curso       Curso    @relation(fields: [cursoId], references: [id])
+  cursoId     Int
+  vistas ClaseVista[]
+}
+
+model ClaseVista {
+  id        Int     @id @default(autoincrement())
+  alumno    Usuario @relation(fields: [alumnoId], references: [id])
+  alumnoId  Int
+  clase     Clase   @relation(fields: [claseId], references: [id])
+  claseId   Int
+  vista     Boolean @default(true)
+
+  @@unique([alumnoId, claseId])
+} //a esta tabla la creo para poder dejar registro de si un alumno X vio una clase X o no
 
 model Inscripcion {
   id        Int      @id @default(autoincrement())

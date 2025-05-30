@@ -3,7 +3,6 @@ import prisma from "../prisma/client.js";
 
 export const getAlumnos = async () => {
   return await prisma.usuario.findMany({
-    include: { inscripciones: true },
     where: { rol: "ALUMNO" },
   });
 };

@@ -3,6 +3,8 @@ import cors from 'cors';
 
 import usuarioRouter from './router/usuario.router.js';
 import inscripcionRouter from './router/inscripcion.router.js';
+import cursoRouter from './router/curso.router.js';
+import claseRouter from './router/clase.router.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -16,6 +18,9 @@ app.use(cors({
 // Rutas
 app.use('/usuario', usuarioRouter);
 app.use('/inscripcion', inscripcionRouter);
+app.use('/curso', cursoRouter);
+app.use('/clase', claseRouter);
+
 
 app.get('/', (req, res) => {
   res.send('¡Servidor con Prisma y PostgreSQL activo!');
