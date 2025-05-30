@@ -33,7 +33,7 @@ model Curso {
   titulo      String
   profesor    Usuario @relation("cursosDocente", fields: [profesorId], references: [id])
   profesorId  Int
-
+//agregar descripcion e imagen
   inscripciones Inscripcion[]
 }
 

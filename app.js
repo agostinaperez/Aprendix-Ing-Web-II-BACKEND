@@ -1,18 +1,21 @@
 import express, { json } from 'express';
 import cors from 'cors';
 
-import alumnoRouter from './router/alumno.js';
-import inscripcionRouter from './router/inscripcion.js';
+import usuarioRouter from './router/usuario.router.js';
+import inscripcionRouter from './router/inscripcion.router.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 app.use(json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 
 // Rutas
-app.use('/alumnos', alumnoRouter);
-app.use('/inscripciones', inscripcionRouter);
+app.use('/usuario', usuarioRouter);
+app.use('/inscripcion', inscripcionRouter);
 
 app.get('/', (req, res) => {
   res.send('¡Servidor con Prisma y PostgreSQL activo!');
@@ -24,3 +27,5 @@ app.listen(PORT, () => {
 
 
 //npm run dev
+//npx nodemon app.js
+
