@@ -6,6 +6,7 @@
 
 
 //cuando quiera hacer los cambios tengo que ejecutar npx prisma migrate dev --name descripcionDelCambio
+// npx prisma studio para interfaz gráfica
 
 generator client {
   provider = "prisma-client-js"

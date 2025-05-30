@@ -16,17 +16,19 @@ router.get("/alumnos/all", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   try {
-    const { nombre, email, username, password } = req.body;
-    console.log(req.body);
-    if (!nombre || !email || !password || !username) {
-      console.log("entre al primer if");
-
+    const { nombre, email, usuario, password } = req.body;
+    if (!nombre || !email || !password || !usuario) {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
-    usuarioService.crearAlumno(nombre, email, username, password);
+    const nuevoAlumno = usuarioService.crearAlumno({ nombre, email, usuario, password });
 
-    res.status(201).json(nuevoAlumno);
+    res.status(201).json({
+      message: "Bien! Se creó el alumno",
+      nuevoAlumno: {
+        usuario: nuevoAlumno.usuario,
+      },
+    });
   } catch (error) {
     if (error.code === "P2002") {
       return res.status(400).json({ error: "Email ya registrado" });
@@ -38,7 +40,6 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  console.log("llegue al back");
   const { email, password } = req.body;
 
   try {
@@ -54,7 +55,6 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(error.statusCode || 500).json({
       error: error.message || "Error interno",
     });

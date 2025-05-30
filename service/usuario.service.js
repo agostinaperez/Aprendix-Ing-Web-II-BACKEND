@@ -9,12 +9,6 @@ export const getAlumnos = async () => {
 
 export const crearAlumno = async ({ nombre, email, usuario, password }) => {
   if (!nombre || !email || !password || !usuario) {
-    console.log(nombre);
-    console.log(email);
-    console.log(password);
-    console.log(usuario);
-
-    console.log("entre al segundo if");
     throw new Error("Faltan campos obligatorios");
   }
 
