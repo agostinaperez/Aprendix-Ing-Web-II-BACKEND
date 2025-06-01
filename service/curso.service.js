@@ -16,3 +16,15 @@ export const getCursosByAlumnoId = async ({ alumnoId }) => {
   });
   //if cursos.length == 0 es pq el alumno no se inscribió a ningún curso
 };
+
+export const createCurso = async ({titulo, descripcion, categoria, profesorId, imagenUrl}) => {
+  return await prisma.curso.create({
+    data: {
+      titulo,
+      descripcion,
+      categoria,
+      imagen: imagenUrl,
+      profesorId: parseInt(profesorId),
+    },
+  });
+}
