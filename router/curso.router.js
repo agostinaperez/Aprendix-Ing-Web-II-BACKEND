@@ -23,8 +23,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-router.get("/curso/all", async (req, res) => {
+//chequeado
+router.get("/all", async (req, res) => {
   try {
     const cursos = await cursoService.getAllCursos();
     res.json(cursos);
@@ -33,16 +33,27 @@ router.get("/curso/all", async (req, res) => {
   }
 });
 
-router.get("/clases/:alumnoId", async (req, res) => {
-  const alumnoId = Number(req.query.alumnoId);
+router.get("/alumno/:alumnoId", async (req, res) => {
+  const alumnoId = Number(req.params.alumnoId);
   try {
-    const cursos = await cursoService.getCursosByAlumnoId(alumnoId);
+    const cursos = await cursoService.getCursosByAlumnoId({ id: alumnoId });
     res.json(cursos);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener tus cursos", detalle: error.message });
   }
 });
 
+//chequeado
+router.get("/profesor/:profesorId", async (req, res) => {
+  const profesorId = Number(req.params.profesorId);
+  try {
+    const cursos = await cursoService.getCursosByProfesorId(profesorId);
+    res.json(cursos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener tus cursos", detalle: error.message });
+  }
+});
+//chequeado
 router.post("/new", upload.single('imagen'), async (req, res) => {
   try {
     const { titulo, descripcion, categoria, profesorId } = req.body;

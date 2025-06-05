@@ -13,14 +13,14 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener inscripciones', detalle: error.message });
   }
 });
-
-router.post('/', async (req, res) => {
+//chequeado
+router.post('/new', async (req, res) => {
   try {
-    const { alumnoId, claseId } = req.body;
+    const { alumnoId, cursoId } = req.body;
     const inscripcion = await prisma.inscripcion.create({
       data: {
         alumno: { connect: { id: alumnoId } },
-        clase: { connect: { id: claseId } },
+        curso: { connect: { id: cursoId } },
       },
     });
     res.status(201).json(inscripcion);
