@@ -39,7 +39,14 @@ router.get("/alumno/:alumnoId", async (req, res) => {
     const cursos = await cursoService.getCursosByAlumnoId({ id: alumnoId });
     res.json(cursos);
   } catch (error) {
-    res.status(500).json({ error: "Error al obtener tus cursos", detalle: error.message });
+    if (error.status === 404) {
+      console.log("entre a error 404")
+      res.status(404).json({ error: "Lo sentimos, no tienes inscripciones activas!", detalle: error.message });    
+    } else {
+            console.log("entre a error 500")
+
+      res.status(500).json({ error: "Error al obtener tus cursos", detalle: error.message });
+    }
   }
 });
 

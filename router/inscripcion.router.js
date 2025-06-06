@@ -1,5 +1,7 @@
 import express from 'express';
 import prisma from '../prisma/client.js';
+import * as inscripcionService from "../service/inscripcion.service.js";
+
 
 const router = express.Router();
 
@@ -16,13 +18,10 @@ router.get('/', async (req, res) => {
 //chequeado
 router.post('/new', async (req, res) => {
   try {
+    console.log("llegue al router");
     const { alumnoId, cursoId } = req.body;
-    const inscripcion = await prisma.inscripcion.create({
-      data: {
-        alumno: { connect: { id: alumnoId } },
-        curso: { connect: { id: cursoId } },
-      },
-    });
+    console.log('Datos recibidos:', { alumnoId, cursoId });
+    const inscripcion = inscripcionService.createInscripcion({alumnoId, cursoId});
     res.status(201).json(inscripcion);
   } catch (error) {
     res.status(400).json({ error: 'Error al crear inscripción', detalle: error.message });
