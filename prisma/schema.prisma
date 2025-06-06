@@ -49,16 +49,16 @@ model Clase {
   descripcion String
   archivo  String 
   vista       Boolean  @default(false)
-  curso       Curso    @relation(fields: [cursoId], references: [id])
+  curso       Curso    @relation(fields: [cursoId], references: [id], onDelete: Cascade)
   cursoId     Int
   vistas ClaseVista[]
 }
 
 model ClaseVista {
   id        Int     @id @default(autoincrement())
-  alumno    Usuario @relation(fields: [alumnoId], references: [id])
+  alumno    Usuario @relation(fields: [alumnoId], references: [id], onDelete: Cascade)
   alumnoId  Int
-  clase     Clase   @relation(fields: [claseId], references: [id])
+  clase     Clase   @relation(fields: [claseId], references: [id], onDelete: Cascade)
   claseId   Int
   vista     Boolean @default(true)
 
@@ -67,9 +67,9 @@ model ClaseVista {
 
 model Inscripcion {
   id        Int      @id @default(autoincrement())
-  alumno    Usuario  @relation("inscripcionesAlumno", fields: [alumnoId], references: [id])
+  alumno    Usuario  @relation("inscripcionesAlumno", fields: [alumnoId], references: [id], onDelete: Cascade)
   alumnoId  Int
-  curso     Curso    @relation(fields: [cursoId], references: [id])
+  curso     Curso    @relation(fields: [cursoId], references: [id], onDelete: Cascade)
   cursoId   Int
   fecha     DateTime @default(now())
 }

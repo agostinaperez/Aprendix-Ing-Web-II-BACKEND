@@ -24,7 +24,24 @@ export const getClasesConVistaByCursoId = async (cursoId, alumnoId) => {
     id: clase.id,
     nombre: clase.nombre,
     descripcion: clase.descripcion,
-    attachment: clase.attachment,
+    archivo: clase.archivo,
     vista: clase.vistas.length > 0 ? clase.vistas[0].vista : false,
   }));
 };
+
+export const createClase = async ({nombre, descripcion, cursoId, archivo}) => {
+  return await prisma.clase.create({
+    data: {
+      nombre,
+      descripcion,
+      archivo: archivo,
+      cursoId: parseInt(cursoId),
+    },
+  });
+}
+
+export const deleteClase = async ({claseId}) => {
+  await prisma.clase.delete({
+      where: { id: claseId },
+  });
+}

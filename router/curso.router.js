@@ -33,18 +33,17 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//chequeado
 router.get("/alumno/:alumnoId", async (req, res) => {
   const alumnoId = Number(req.params.alumnoId);
   try {
     const cursos = await cursoService.getCursosByAlumnoId({ id: alumnoId });
     res.json(cursos);
   } catch (error) {
+    console.log(error.status)
     if (error.status === 404) {
-      console.log("entre a error 404")
       res.status(404).json({ error: "Lo sentimos, no tienes inscripciones activas!", detalle: error.message });    
     } else {
-            console.log("entre a error 500")
-
       res.status(500).json({ error: "Error al obtener tus cursos", detalle: error.message });
     }
   }
@@ -55,8 +54,10 @@ router.get("/profesor/:profesorId", async (req, res) => {
   const profesorId = Number(req.params.profesorId);
   try {
     const cursos = await cursoService.getCursosByProfesorId(profesorId);
+    console.log(cursos);
     res.json(cursos);
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: "Error al obtener tus cursos", detalle: error.message });
   }
 });
@@ -73,5 +74,55 @@ router.post("/new", upload.single('imagen'), async (req, res) => {
     res.status(500).json({ error: "Error al crear el curso." });
   }
 });
+
+router.get("/count/:profesorId", async (req, res) => {
+  const profesorId = Number(req.params.profesorId);
+  try {
+    const cursos = await cursoService.countCursosByProfesorId(profesorId);
+    res.json(cursos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener los cursos", detalle: error.message });
+  }
+});
+
+router.delete('/delete/:id', async (req, res) => {
+  const cursoId = parseInt(req.params.id);
+
+  try {
+    cursoService.deleteCurso({cursoId});
+    res.json({ message: 'Curso eliminado correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar curso:', error);
+    console.log(error.message)
+    res.status(500).json({ error: 'Error al eliminar el curso' });
+  }
+});
+
+router.post("/edit/:id", upload.single('imagen'), async (req, res) => {
+  try {
+    const cursoId = parseInt(req.params.id);
+    const { titulo, descripcion, categoria } = req.body;
+    console.log(req.body);
+    let imagenUrl;
+
+    if (req.file) {
+      imagenUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const cursoActualizado = await cursoService.updateCurso({
+      id: cursoId,
+      titulo,
+      descripcion,
+      categoria,
+      imagenUrl,
+    });
+
+    res.json(cursoActualizado);
+  } catch (error) {
+    console.error("Error al editar el curso:", error);
+    res.status(500).json({ error: "Error al editar el curso." });
+  }
+});
+
 
 export default router;
