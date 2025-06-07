@@ -9,7 +9,6 @@ export const getAllCursos = async () => {
   });
 };
 
-//no se pq si no tengo inscripciones se rompe :(
 export const getCursosByAlumnoId = async ({ id }) => {
   const usuario = await prisma.usuario.findUnique({
     where: { id: parseInt(id) },

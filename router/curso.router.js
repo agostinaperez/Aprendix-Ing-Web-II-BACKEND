@@ -29,6 +29,7 @@ router.get("/all", async (req, res) => {
     const cursos = await cursoService.getAllCursos();
     res.json(cursos);
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({ error: "Error al obtener los cursos", detalle: error.message });
   }
 });

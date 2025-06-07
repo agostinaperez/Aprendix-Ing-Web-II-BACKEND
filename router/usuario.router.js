@@ -21,14 +21,9 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
-    const nuevoAlumno = usuarioService.crearAlumno({ nombre, email, usuario, password });
-
-    res.status(201).json({
-      message: "Bien! Se creó el alumno",
-      nuevoAlumno: {
-        usuario: nuevoAlumno.usuario,
-      },
-    });
+    const nuevoAlumno = await usuarioService.crearAlumno({ nombre, email, usuario, password });
+    console.log(nuevoAlumno);
+    res.status(201).json(nuevoAlumno);
   } catch (error) {
     if (error.code === "P2002") {
       return res.status(400).json({ error: "Email ya registrado" });
