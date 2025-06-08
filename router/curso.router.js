@@ -124,5 +124,15 @@ router.post("/edit/:id", upload.single('imagen'), async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const cursoId = parseInt(req.params.id);
+    const curso = await cursoService.getCursoById({cursoId});
+    res.json(curso);
+  } catch (error) {
+    console.error("Error al editar el curso:", error);
+    res.status(500).json({ error: "Error al editar el curso." });
+  }
+});
 
 export default router;

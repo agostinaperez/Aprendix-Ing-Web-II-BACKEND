@@ -29,6 +29,15 @@ export const getClasesConVistaByCursoId = async (cursoId, alumnoId) => {
   }));
 };
 
+export const getClasesByCursoId = async (cursoId, alumnoId) => {
+  return await prisma.clase.findMany({
+    where: {
+      cursoId: cursoId,
+    },
+    orderBy: { id: 'asc' },
+  });
+};
+
 export const createClase = async ({nombre, descripcion, cursoId, archivo}) => {
   return await prisma.clase.create({
     data: {

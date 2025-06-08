@@ -67,4 +67,20 @@ router.delete('/delete/:id', async (req, res) => {
   }
 });
 
+router.get("/:cursoId", async (req, res) => { /*
+A esto lo llamo tipo
+const response = await fetch(`http://localhost:3000/clases/${cursoId}?alumnoId=${alumnoId}`);
+const clases = await response.json();*/
+
+const cursoId = Number(req.params.cursoId);
+  try {
+    const clases = await claseService.getClasesByCursoId(cursoId);
+    res.json(clases);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al obtener clases", detalle: error.message });
+  }
+});
+
 export default router;

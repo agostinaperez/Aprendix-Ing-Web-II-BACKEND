@@ -92,3 +92,15 @@ export const updateCurso = async ({id, titulo, descripcion, categoria, imagenUrl
     data: dataToUpdate,
   });
 };
+
+export const getCursoById = async ({ id }) => {
+  return await prisma.curso.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      clases: true,
+      profesor: true,
+    },
+  });
+}
