@@ -1,5 +1,6 @@
 import { console } from "inspector";
 import prisma from "../prisma/client.js";
+import bcrypt from 'bcrypt';
 
 export const getAlumnos = async () => {
   return await prisma.usuario.findMany({
@@ -33,4 +34,27 @@ export const login = async ({ email, password }) => {
   }
 
   return user;
+};
+
+export const updatePerfil = async ({id, nombre, usuario, email, passwordActual, nuevaPassword}) => {
+  const dataToUpdate = {
+    nombre,
+    usuario,
+    email,
+    };
+  if (nuevaPassword) {
+    const user = await prisma.usuario.findUnique({ where: { id } });
+
+    const passwordValida = passwordActual == user.password;
+    if (!passwordValida) {
+      throw new Error('Contraseña actual incorrecta');
+    }
+
+    dataToUpdate.password = nuevaPassword;
+  }
+
+  return await prisma.usuario.update({
+    where: { id },
+    data: dataToUpdate,
+  });
 };

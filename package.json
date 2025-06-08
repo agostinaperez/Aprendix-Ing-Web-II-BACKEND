@@ -22,6 +22,7 @@
   "homepage": "https://github.com/agostinaperez/Aprendix-Ing-Web-II-BACKEND#readme",
   "dependencies": {
     "@prisma/client": "^6.8.2",
+    "bcrypt": "^6.0.0",
     "cors": "2.8.5",
     "express": "^4.21.2",
     "multer": "^2.0.0",
