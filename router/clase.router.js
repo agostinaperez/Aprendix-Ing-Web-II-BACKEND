@@ -55,13 +55,14 @@ const alumnoId = Number(req.params.alumnoId);
 });
 
 router.delete('/delete/:id', async (req, res) => {
-  const cursoId = parseInt(req.params.id);
+  const claseId = parseInt(req.params.id);
 
   try {
-    cursoService.deleteCurso({cursoId});
+    claseService.deleteClase({claseId});
     res.json({ message: 'Curso eliminado correctamente' });
   } catch (error) {
     console.error('Error al eliminar curso:', error);
+    console.log(error.message)
     res.status(500).json({ error: 'Error al eliminar el curso' });
   }
 });
