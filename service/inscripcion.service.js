@@ -9,3 +9,13 @@ export const createInscripcion = async ({alumnoId, cursoId}) => {
       },
     });
 }
+
+export const countAlumnosInscritos = async ({profesorId}) => {
+  return await prisma.inscripcion.count({
+      where: {
+        curso: {
+          profesorId: parseInt(profesorId),
+        },
+      },
+    });
+}

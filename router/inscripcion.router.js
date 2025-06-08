@@ -15,6 +15,20 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Error al obtener inscripciones', detalle: error.message });
   }
 });
+
+router.get('/alumnos-inscritos/:profesorId', async (req, res) => {
+  try {
+    const profesorId = Number(req.params.profesorId);
+    const cantidadAlumnos = await inscripcionService.countAlumnosInscritos({profesorId});
+    res.json(cantidadAlumnos);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Error al contar alumnos inscritos',
+      detalle: error.message,
+    });
+  }
+});
+
 //chequeado
 router.post('/new', async (req, res) => {
   try {

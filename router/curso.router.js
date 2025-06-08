@@ -54,8 +54,7 @@ router.get("/alumno/:alumnoId", async (req, res) => {
 router.get("/profesor/:profesorId", async (req, res) => {
   const profesorId = Number(req.params.profesorId);
   try {
-    const cursos = await cursoService.getCursosByProfesorId(profesorId);
-    console.log(cursos);
+    const cursos = await cursoService.getCursosByProfesorId({profesorId});
     res.json(cursos);
   } catch (error) {
     console.log(error.message);
