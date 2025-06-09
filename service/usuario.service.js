@@ -13,8 +13,10 @@ export const crearAlumno = async ({ nombre, email, usuario, password }) => {
     throw new Error("Faltan campos obligatorios");
   }
 
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   return await prisma.usuario.create({
-    data: { nombre, email, usuario, password, rol: "ALUMNO" },
+    data: { nombre, email, usuario, password: hashedPassword, rol: "ALUMNO" },
   });
 };
 
@@ -26,13 +28,20 @@ export const login = async ({ email, password }) => {
   const user = await prisma.usuario.findUnique({
     where: { email },
   });
-
-  if (!user || user.password !== password) {
-    const err = new Error("Usuario o contraseña incorrectos");
+  
+  if (!user) {
+    const err = new Error("Usuario incorrecto");
     err.statusCode = 401;
     throw err;
-  }
+  } else {
+    const passwordValida = await bcrypt.compare(password, user.password);
 
+    if (!passwordValida) {
+      const err = new Error('Usuario o contraseña incorrectos');
+      err.statusCode = 401;
+      throw err;
+    }
+  }
   return user;
 };
 
@@ -45,12 +54,16 @@ export const updatePerfil = async ({id, nombre, usuario, email, passwordActual, 
   if (nuevaPassword) {
     const user = await prisma.usuario.findUnique({ where: { id } });
 
-    const passwordValida = passwordActual == user.password;
+    const passwordValida = await bcrypt.compare(passwordActual, user.password);
+
     if (!passwordValida) {
-      throw new Error('Contraseña actual incorrecta');
+      const err = new Error('Usuario o contraseña incorrectos');
+      err.statusCode = 401;
+      throw err;
     }
 
-    dataToUpdate.password = nuevaPassword;
+    const hashedPassword = await bcrypt.hash(nuevaPassword, 10);
+    dataToUpdate.password = hashedPassword;
   }
 
   return await prisma.usuario.update({
