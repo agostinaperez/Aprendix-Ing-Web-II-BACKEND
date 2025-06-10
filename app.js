@@ -3,6 +3,9 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+require('dotenv').config();
+require('./jobs/verificarClasesVistas');
+
 
 import usuarioRouter from './router/usuario.router.js';
 import inscripcionRouter from './router/inscripcion.router.js';

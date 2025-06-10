@@ -29,7 +29,7 @@ export const getClasesConVistaByCursoId = async (cursoId, alumnoId) => {
   }));
 };
 
-export const getClasesByCursoId = async (cursoId, alumnoId) => {
+export const getClasesByCursoId = async (cursoId) => {
   return await prisma.clase.findMany({
     where: {
       cursoId: cursoId,
@@ -53,4 +53,35 @@ export const deleteClase = async ({claseId}) => {
   await prisma.clase.delete({
       where: { id: claseId },
   });
+}
+
+export const setClaseVista = async ({claseId, alumnoId}) => {
+  return await prisma.claseVista.upsert({
+      where: {
+        alumnoId_claseId: {
+          alumnoId: parseInt(alumnoId),
+          claseId: parseInt(claseId),
+        },
+      },
+      update: {
+        vista: true,
+      },
+      create: {
+        alumnoId: parseInt(alumnoId),
+        claseId: parseInt(claseId),
+        vista: true,
+      },
+    });
+}
+
+export const getClasesVistasByAlumnoId = async ({cursoId, alumnoId}) => {
+  return await prisma.claseVista.findMany({
+      where: {
+        alumnoId: parseInt(alumnoId),
+        clase: {
+          cursoId: parseInt(cursoId),
+        },
+        vista: true,
+      },
+    });
 }

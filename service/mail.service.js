@@ -69,3 +69,18 @@ export const enviarMailInscripcion = async (alumnoId, cursoId) => {
     console.error("❌ Error al enviar correo:", error);
   }
 };
+
+export const enviarRecordatorio = async (inscripcion) => {
+  const mailOptions = {
+          from: process.env.EMAIL_USER,
+          to: inscripcion.alumno.email,
+          subject: `¡Aún no comenzaste el curso "${inscripcion.curso.nombre}"!`,
+          text: `Hola ${inscripcion.alumno.nombre},\n\nHan pasado 3 días desde que te inscribiste en el curso "${inscripcion.curso.nombre}" y aún no viste ninguna clase.\n\n¡No te lo pierdas! Comienza hoy mismo.\n\nSaludos,\nEl equipo de Aprendix`,
+        };
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("✅ Correo enviado:", info.response);
+  } catch (error) {
+    console.error("❌ Error al enviar correo:", error);
+  }
+};

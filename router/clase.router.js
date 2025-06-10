@@ -37,11 +37,7 @@ router.post("/new", upload.single('archivo'), async (req, res) => {
   }
 });
 
-router.get("/:cursoId/:alumnoId", async (req, res) => { /*
-A esto lo llamo tipo
-const response = await fetch(`http://localhost:3000/clases/${cursoId}?alumnoId=${alumnoId}`);
-const clases = await response.json();*/
-
+router.get("/:cursoId/:alumnoId", async (req, res) => { 
 const cursoId = Number(req.params.cursoId);
 const alumnoId = Number(req.params.alumnoId);
   try {
@@ -67,11 +63,7 @@ router.delete('/delete/:id', async (req, res) => {
   }
 });
 
-router.get("/:cursoId", async (req, res) => { /*
-A esto lo llamo tipo
-const response = await fetch(`http://localhost:3000/clases/${cursoId}?alumnoId=${alumnoId}`);
-const clases = await response.json();*/
-
+router.get("/:cursoId", async (req, res) => { 
 const cursoId = Number(req.params.cursoId);
   try {
     const clases = await claseService.getClasesByCursoId(cursoId);
@@ -82,5 +74,35 @@ const cursoId = Number(req.params.cursoId);
       .json({ error: "Error al obtener clases", detalle: error.message });
   }
 });
+
+router.post('/:claseId/vista', async (req, res) => {
+  const { claseId } = Number(req.params.claseId);
+  const { alumnoId } = req.body;
+
+  try {
+    const claseVista = await claseService.setClaseVista({claseId, alumnoId});
+
+    res.json({ success: true, claseVista });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al marcar clase como vista' });
+  }
+});
+
+router.get('/:cursoId/:alumnoId/clases-vistas', async (req, res) => {
+  const { cursoId, alumnoId } = req.params;
+
+  try {
+    const clasesVistas = await claseService.getClasesVistasByAlumnoId({cursoId, alumnoId});
+
+    const vioAlMenosUna = clasesVistas.length > 0;
+
+    res.json({ vioAlMenosUna, clasesVistas });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al consultar clases vistas del curso' });
+  }
+});
+
 
 export default router;
