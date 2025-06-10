@@ -4,6 +4,7 @@ import multer from 'multer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { enviarMailBienvenida } from '../service/mail.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -42,7 +43,7 @@ router.post("/register", async (req, res) => {
     }
 
     const nuevoAlumno = await usuarioService.crearAlumno({ nombre, email, usuario, password });
-    console.log(nuevoAlumno);
+    await enviarMailBienvenida(nuevoAlumno);
     res.status(201).json(nuevoAlumno);
   } catch (error) {
     if (error.code === "P2002") {

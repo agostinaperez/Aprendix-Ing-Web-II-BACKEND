@@ -71,3 +71,11 @@ export const updatePerfil = async ({id, nombre, usuario, email, passwordActual, 
     data: dataToUpdate,
   });
 };
+
+export const getUserById = async ({ id }) => {
+  return await prisma.usuario.findUnique({
+    where: {
+      id: id,
+    }
+  });
+}
