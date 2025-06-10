@@ -1,7 +1,7 @@
 # Aprendix-Ing-Web-II
 Trabajo Práctico integrador para la materia Ingeniería Web 2, 2025. Pérez López Agostina y Camila Doffo
 
-Este es un proyecto backend desarrollado en Node.js usando Express.js como framework, PostgreSQL como base de datos, Prisma ORM para la interacción con la base de datos y Nodemon para el reinicio automático del servidor en desarrollo.
+Este es un proyecto backend desarrollado en Node.js usando Express.js como framework, PostgreSQL como base de datos, Prisma ORM para la interacción con la base de datos y Nodemon para el reinicio automático del servidor en desarrollo. Se añade además Nodemailer, quien permite la integración con Gmail para el envío de correos a los usuarios y Bcrypt, que permite la encriptación de contraseñas para mayor seguridad.
 
 ## Tecnologías utilizadas
 
@@ -10,6 +10,8 @@ Este es un proyecto backend desarrollado en Node.js usando Express.js como frame
 - PostgreSQL
 - Prisma ORM
 - Nodemon
+- Nodemailer
+- Bcrypt
 
 ---
 
@@ -61,6 +63,8 @@ npx prisma studio
 * Tener PostgreSQL corriendo localmente.
 * Haber creado la base de datos antes de correr las migraciones.
 
+## En caso de error
+- Corroborar que estén instalados bcrypt (npm install bcrypt), nodemon (npm install nodemon), y nodemailer (npm install nodemailer)
 ---
 
 (Este proyecto está en desarrollo).

@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 import { getCursoById } from "./curso.service";
 import dotenv from "dotenv";
-import { get } from "http";
 dotenv.config();
 
 const EMAIL_EMISOR = process.env.EMAIL_EMISOR;
