@@ -81,7 +81,6 @@ router.post("/edit/:id", upload.none(), async (req, res) => {
   try {
     const userId = parseInt(req.params.id);
     const { nombre, usuario, email, passwordActual, nuevaPassword } = req.body;
-        console.log(req.body)
 
     const perfilActualizado = await usuarioService.updatePerfil({
       id: userId,

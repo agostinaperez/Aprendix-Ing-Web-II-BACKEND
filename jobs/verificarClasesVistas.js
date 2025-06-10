@@ -1,4 +1,4 @@
-const cron = require('node-cron');
+import cron from 'node-cron';
 import { enviarRecordatorio } from '../service/mail.service.js';
 import prisma from "../prisma/client.js";
 import * as claseService from "../service/clase.service.js";

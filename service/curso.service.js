@@ -20,8 +20,6 @@ export const getCursosByAlumnoId = async ({ id }) => {
       },
     },
   });
-  console.log("llegue al service");
-  console.log(usuario.inscripciones);
 
   if (!usuario) {
     return res.status(404).json({ error: "Usuario no encontrado" });
@@ -93,10 +91,11 @@ export const updateCurso = async ({id, titulo, descripcion, categoria, imagenUrl
   });
 };
 
-export const getCursoById = async ({ id }) => {
+export const getCursoById = async ({ cursoId }) => {
+  console.log("en getCursoById", cursoId)
   return await prisma.curso.findUnique({
     where: {
-      id: id,
+      id: cursoId,
     },
     include: {
       clases: true,

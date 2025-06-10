@@ -1,7 +1,8 @@
 import prisma from '../prisma/client.js';
 
 export const createInscripcion = async ({alumnoId, cursoId}) => {
-    console.log("llegue al service");
+    console.log("en insc service", cursoId);
+
   return await prisma.inscripcion.create({
       data: {
         alumno: { connect: { id: alumnoId } },

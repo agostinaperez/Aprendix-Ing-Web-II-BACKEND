@@ -102,7 +102,6 @@ router.post("/edit/:id", upload.single('imagen'), async (req, res) => {
   try {
     const cursoId = parseInt(req.params.id);
     const { titulo, descripcion, categoria } = req.body;
-    console.log(req.body);
     let imagenUrl;
 
     if (req.file) {

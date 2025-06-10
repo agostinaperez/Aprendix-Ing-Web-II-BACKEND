@@ -33,11 +33,13 @@ router.get('/alumnos-inscritos/:profesorId', async (req, res) => {
 //chequeado
 router.post('/new', async (req, res) => {
   try {
-    const { alumnoId, cursoId } = req.body;
-    const inscripcion = inscripcionService.createInscripcion({alumnoId, cursoId});
-    await enviarMailInscripcion(alumnoId, cursoId);
+    const alumnoId = Number(req.body.alumnoId);
+    const cursoId = Number(req.body.cursoId);
+    const inscripcion = await inscripcionService.createInscripcion({alumnoId, cursoId});
+    await enviarMailInscripcion({alumnoId, cursoId});
     res.status(201).json(inscripcion);
   } catch (error) {
+    console.log(error.message);
     res.status(400).json({ error: 'Error al crear inscripción', detalle: error.message });
   }
 });

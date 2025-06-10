@@ -1,6 +1,9 @@
 import nodemailer from "nodemailer";
-import { getCursoById } from "./curso.service";
+import { getCursoById } from "./curso.service.js";
+import { getUserById } from "./usuario.service.js";
 import dotenv from "dotenv";
+import prisma from "../prisma/client.js";
+
 dotenv.config();
 
 const EMAIL_EMISOR = process.env.EMAIL_EMISOR;
@@ -38,9 +41,17 @@ export const enviarMailBienvenida = async (usuario) => {
   }
 };
 
-export const enviarMailInscripcion = async (alumnoId, cursoId) => {
-  const curso = await getCursoById(cursoId);
-  const usuario = await getUserById(alumnoId);
+export const enviarMailInscripcion = async ({alumnoId, cursoId}) => {
+  const curso = await prisma.curso.findUnique({
+    where: {
+      id: cursoId,
+    }
+  });
+  const usuario = await prisma.usuario.findUnique({
+    where: {
+      id: alumnoId,
+    }
+  });
 
   if (!curso || !usuario || !usuario.email) {
     console.warn("⚠️ No se enviará el mail: curso o usuario no encontrados.");
