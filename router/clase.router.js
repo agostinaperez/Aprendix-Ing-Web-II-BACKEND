@@ -75,15 +75,16 @@ const cursoId = Number(req.params.cursoId);
   }
 });
 
-router.post('/:claseId/vista', async (req, res) => {
-  const { claseId } = Number(req.params.claseId);
-  const { alumnoId } = req.body;
-
+router.post('/vista', async (req, res) => {
+  const alumnoId = Number(req.body.alumnoId);
+  const claseId = Number(req.body.claseId);
+  console.log("claseId:", claseId);
   try {
     const claseVista = await claseService.setClaseVista({claseId, alumnoId});
 
     res.json({ success: true, claseVista });
   } catch (error) {
+    console.log(error.message);
     console.error(error);
     res.status(500).json({ error: 'Error al marcar clase como vista' });
   }

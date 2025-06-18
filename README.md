@@ -64,7 +64,7 @@ npx prisma studio
 * Haber creado la base de datos antes de correr las migraciones.
 
 ## En caso de error
-- Corroborar que estén instalados bcrypt (npm install bcrypt), nodemon (npm install nodemon), y nodemailer (npm install nodemailer)
+- Corroborar que estén instalados bcrypt (npm install bcrypt), nodemon (npm install nodemon), nodemailer (npm install nodemailer), y dotenv (npm install dotenv)
 ---
 
 (Este proyecto está en desarrollo).
