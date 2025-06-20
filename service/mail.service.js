@@ -42,11 +42,15 @@ export const enviarMailBienvenida = async (usuario) => {
 };
 
 export const enviarMailInscripcion = async ({alumnoId, cursoId}) => {
+    console.log("CursoId en mail service:", cursoId)
+
   const curso = await prisma.curso.findUnique({
     where: {
       id: cursoId,
     }
   });
+
+  console.log(curso);
   const usuario = await prisma.usuario.findUnique({
     where: {
       id: alumnoId,
@@ -65,7 +69,7 @@ export const enviarMailInscripcion = async ({alumnoId, cursoId}) => {
     html: `
       <div style="font-family: sans-serif; padding: 20px; background-color: #f4f4f4;">
         <h2 style="color: #3e64ff;">¡Hola ${usuario.nombre}!</h2>
-        <p>Gracias por inscribirte al curso <strong>${curso.nombre}</strong>. Ahora vas a poder acceder a las clases del mismo, ¡No te olvides de mantener tu racha!.</p>
+        <p>Gracias por inscribirte al curso <strong>${curso.titulo}</strong>. Ahora vas a poder acceder a las clases del mismo, ¡No te olvides de mantener tu racha!.</p>
         <p>¡A seguir aprendiendo! Y recuerda que ante cualquier duda puedes comunicarte con tu profesor</p>
         <hr />
         <small>Equipo APRENDIX.</small>
@@ -85,8 +89,8 @@ export const enviarRecordatorio = async (inscripcion) => {
   const mailOptions = {
           from: process.env.EMAIL_USER,
           to: inscripcion.alumno.email,
-          subject: `¡Aún no comenzaste el curso "${inscripcion.curso.nombre}"!`,
-          text: `Hola ${inscripcion.alumno.nombre},\n\nHan pasado 3 días desde que te inscribiste en el curso "${inscripcion.curso.nombre}" y aún no viste ninguna clase.\n\n¡No te lo pierdas! Comienza hoy mismo.\n\nSaludos,\nEl equipo de Aprendix`,
+          subject: `¡Aún no comenzaste el curso "${inscripcion.curso.titulo}"!`,
+          text: `Hola ${inscripcion.alumno.nombre},\n\nHan pasado 3 días desde que te inscribiste en el curso "${inscripcion.curso.titulo}" y aún no viste ninguna clase.\n\n¡No te lo pierdas! Comienza hoy mismo.\n\nSaludos,\nEl equipo de Aprendix`,
         };
   try {
     const info = await transporter.sendMail(mailOptions);

@@ -35,6 +35,7 @@ router.post('/new', async (req, res) => {
   try {
     const alumnoId = Number(req.body.alumnoId);
     const cursoId = Number(req.body.cursoId);
+    console.log("CursoId en router:", cursoId);
     const inscripcion = await inscripcionService.createInscripcion({alumnoId, cursoId});
     await enviarMailInscripcion({alumnoId, cursoId});
     res.status(201).json(inscripcion);
